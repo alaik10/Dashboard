@@ -6,16 +6,33 @@ import matplotlib.pyplot as plt
 # Set up the layout
 sns.set(style="whitegrid")
 
-# Fungsi untuk memuat data
+# Fungsi untuk memuat dan menggabungkan data
 @st.cache(allow_output_mutation=True)
 def load_data():
-    data = pd.read_csv('dataset_for_dashboard.csv')
-    return data
+    files = [
+        "PRSA_Data_Aotizhongxin_20130301-20170228.csv",
+        "PRSA_Data_Changping_20130301-20170228.csv",
+        "PRSA_Data_Dingling_20130301-20170228.csv",
+        "PRSA_Data_Dongsi_20130301-20170228.csv",
+        "PRSA_Data_Guanyuan_20130301-20170228.csv",
+        "PRSA_Data_Gucheng_20130301-20170228.csv",
+        "PRSA_Data_Huairou_20130301-20170228.csv",
+        "PRSA_Data_Nongzhanguan_20130301-20170228.csv",
+        "PRSA_Data_Shunyi_20130301-20170228.csv",
+        "PRSA_Data_Tiantan_20130301-20170228.csv",
+        "PRSA_Data_Wanliu_20130301-20170228.csv",
+        "PRSA_Data_Wanshouxigong_20130301-20170228.csv"
+    ]
+
+    # Membaca setiap dataset dan menyimpannya dalam list
+    datasets = [pd.read_csv(file) for file in files]
+
+    # Menggabungkan dataset menjadi satu DataFrame
+    merged_data = pd.concat(datasets, ignore_index=True)
+    return merged_data
 
 # Memuat data
-data = load_data().copy()
-
-
+data = load_data()
 
 # Pastikan kolom 'datetime' adalah tipe data datetime
 data['datetime'] = pd.to_datetime(data['datetime'])
