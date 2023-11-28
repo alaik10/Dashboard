@@ -10,21 +10,21 @@ sns.set(style="whitegrid")
 @st.cache(allow_output_mutation=True)
 def load_data():
     files = [
-        "PRSA_Data_Aotizhongxin_20130301-20170228.csv",
-        "PRSA_Data_Changping_20130301-20170228.csv",
-        "PRSA_Data_Dingling_20130301-20170228.csv",
-        "PRSA_Data_Dongsi_20130301-20170228.csv",
-        "PRSA_Data_Guanyuan_20130301-20170228.csv",
-        "PRSA_Data_Gucheng_20130301-20170228.csv",
-        "PRSA_Data_Huairou_20130301-20170228.csv",
-        "PRSA_Data_Nongzhanguan_20130301-20170228.csv",
-        "PRSA_Data_Shunyi_20130301-20170228.csv",
-        "PRSA_Data_Tiantan_20130301-20170228.csv",
-        "PRSA_Data_Wanliu_20130301-20170228.csv",
-        "PRSA_Data_Wanshouxigong_20130301-20170228.csv"
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Aotizhongxin_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Changping_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Dingling_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Dongsi_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Guanyuan_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Gucheng_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Huairou_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Nongzhanguan_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Shunyi_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Tiantan_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Wanliu_20130301-20170228.csv",
+        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Wanshouxigong_20130301-20170228.csv"
     ]
 
-    # Membaca setiap dataset dan menyimpannya dalam list
+    # Membaca setiap dataset dari URL dan menyimpannya dalam list
     datasets = [pd.read_csv(file) for file in files]
 
     # Menggabungkan dataset menjadi satu DataFrame
