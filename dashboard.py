@@ -27,10 +27,13 @@ def load_data():
     datasets = []
     for file in files:
         df = pd.read_csv(file)
-        # Standardize column names here if necessary
-        # For example, if some files have 'date' instead of 'datetime'
+        # Check and standardize column names here
+        # E.g., if some files have 'date' instead of 'datetime'
         if 'date' in df.columns:
             df.rename(columns={'date': 'datetime'}, inplace=True)
+        elif 'some_other_date_column_name' in df.columns:
+            df.rename(columns={'some_other_date_column_name': 'datetime'}, inplace=True)
+        # Add more conditions as needed based on your files' structure
         datasets.append(df)
     
     merged_data = pd.concat(datasets, ignore_index=True)
@@ -38,12 +41,13 @@ def load_data():
 
 data = load_data()
 
-# Now check if 'datetime' column exists
+# Check if 'datetime' column exists
 if 'datetime' in data.columns:
     data['datetime'] = pd.to_datetime(data['datetime'])
 else:
     st.error("Column 'datetime' not found in the dataset.")
-
+    # Optional: Print the columns for debugging
+    st.write(data.columns)
 last_date = data['datetime'].max()
 # Calculate the start date of the last month
 start_last_month = last_date - pd.DateOffset(months=1)
