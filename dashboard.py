@@ -10,36 +10,92 @@ sns.set(style="whitegrid")
 @st.cache(allow_output_mutation=True)
 def load_data():
     files = [
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Aotizhongxin_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Changping_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Dingling_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Dongsi_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Guanyuan_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Gucheng_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Huairou_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Nongzhanguan_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Shunyi_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Tiantan_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Wanliu_20130301-20170228.csv",
-        "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Wanshouxigong_20130301-20170228.csv"
+        "PRSA_Data_Aotizhongxin_20130301-20170228.csv",
+        "PRSA_Data_Changping_20130301-20170228.csv",
+        "PRSA_Data_Dingling_20130301-20170228.csv",
+        "PRSA_Data_Dongsi_20130301-20170228.csv",
+        "PRSA_Data_Guanyuan_20130301-20170228.csv",
+        "PRSA_Data_Gucheng_20130301-20170228.csv",
+        "PRSA_Data_Huairou_20130301-20170228.csv",
+        "PRSA_Data_Nongzhanguan_20130301-20170228.csv",
+        "PRSA_Data_Shunyi_20130301-20170228.csv",
+        "PRSA_Data_Tiantan_20130301-20170228.csv",
+        "PRSA_Data_Wanliu_20130301-20170228.csv",
+        "PRSA_Data_Wanshouxigong_20130301-20170228.csv"
+    ]
+
+    # Membaca setiap dataset dan menyimpannya dalam list
+    datasets = [pd.read_csv(file) for file in files]
+
+    # Menggabungkan dataset menjadi satu DataFrame
+    merged_data = pd.concat(datasets, ignore_index=True)
+    return merged_data
+
+# Memuat data
+data = load_data()
+# Fungsi untuk memuat dan menggabungkan data
+@st.cache(allow_output_mutation=True)
+def load_data():
+    files = [
+        "PRSA_Data_Aotizhongxin_20130301-20170228.csv",
+        "PRSA_Data_Changping_20130301-20170228.csv",
+        "PRSA_Data_Dingling_20130301-20170228.csv",
+        "PRSA_Data_Dongsi_20130301-20170228.csv",
+        "PRSA_Data_Guanyuan_20130301-20170228.csv",
+        "PRSA_Data_Gucheng_20130301-20170228.csv",
+        "PRSA_Data_Huairou_20130301-20170228.csv",
+        "PRSA_Data_Nongzhanguan_20130301-20170228.csv",
+        "PRSA_Data_Shunyi_20130301-20170228.csv",
+        "PRSA_Data_Tiantan_20130301-20170228.csv",
+        "PRSA_Data_Wanliu_20130301-20170228.csv",
+        "PRSA_Data_Wanshouxigong_20130301-20170228.csv"
+    ]
+
+    # Membaca setiap dataset dan menyimpannya dalam list
+    datasets = [pd.read_csv(file) for file in files]
+
+    # Menggabungkan dataset menjadi satu DataFrame
+    merged_data = pd.concat(datasets, ignore_index=True)
+    return merged_data
+
+# Memuat data
+data = load_data()
+# Fungsi untuk memuat dan menggabungkan data
+@st.cache(allow_output_mutation=True)
+def load_data():
+    files = [
+        "PRSA_Data_Aotizhongxin_20130301-20170228.csv",
+        "PRSA_Data_Changping_20130301-20170228.csv",
+        "PRSA_Data_Dingling_20130301-20170228.csv",
+        "PRSA_Data_Dongsi_20130301-20170228.csv",
+        "PRSA_Data_Guanyuan_20130301-20170228.csv",
+        "PRSA_Data_Gucheng_20130301-20170228.csv",
+        "PRSA_Data_Huairou_20130301-20170228.csv",
+        "PRSA_Data_Nongzhanguan_20130301-20170228.csv",
+        "PRSA_Data_Shunyi_20130301-20170228.csv",
+        "PRSA_Data_Tiantan_20130301-20170228.csv",
+        "PRSA_Data_Wanliu_20130301-20170228.csv",
+        "PRSA_Data_Wanshouxigong_20130301-20170228.csv"
     ]
 
     datasets = []
     for file in files:
         df = pd.read_csv(file)
-        # Check and standardize column names here
-        # E.g., if some files have 'date' instead of 'datetime'
-        if 'date' in df.columns:
-            df.rename(columns={'date': 'datetime'}, inplace=True)
-        elif 'some_other_date_column_name' in df.columns:
-            df.rename(columns={'some_other_date_column_name': 'datetime'}, inplace=True)
-        # Add more conditions as needed based on your files' structure
+        # Ensure all the necessary columns are present
+        if all(col in df.columns for col in ['year', 'month', 'day', 'hour']):
+            # Create a datetime column from year, month, day, and hour
+            df['datetime'] = pd.to_datetime(df[['year', 'month', 'day', 'hour']])
+        else:
+            # Handle the case where one or more columns are missing
+            st.error("One or more of the columns 'year', 'month', 'day', 'hour' are missing in file: " + file)
+            continue  # Skip this file or handle it as needed
         datasets.append(df)
     
     merged_data = pd.concat(datasets, ignore_index=True)
     return merged_data
 
 data = load_data()
+
 
 # Check if 'datetime' column exists
 if 'datetime' in data.columns:
