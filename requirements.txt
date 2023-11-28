@@ -5,3 +5,4 @@ pandas
 streamlit-aggrid
 matplotlib
 streamlit
+os
