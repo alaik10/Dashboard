@@ -24,18 +24,25 @@ def load_data():
         "https://raw.githubusercontent.com/alaik10/Dashboard/main/PRSA_Data_Wanshouxigong_20130301-20170228.csv"
     ]
 
-    # Membaca setiap dataset dari URL dan menyimpannya dalam list
-    datasets = [pd.read_csv(file) for file in files]
-
-    # Menggabungkan dataset menjadi satu DataFrame
+ datasets = []
+    for file in files:
+        df = pd.read_csv(file)
+        # Standardize column names here if necessary
+        # For example, if some files have 'date' instead of 'datetime'
+        if 'date' in df.columns:
+            df.rename(columns={'date': 'datetime'}, inplace=True)
+        datasets.append(df)
+    
     merged_data = pd.concat(datasets, ignore_index=True)
     return merged_data
 
-# Memuat data
 data = load_data()
 
-# Pastikan kolom 'datetime' adalah tipe data datetime
-data['datetime'] = pd.to_datetime(data['datetime'])
+# Now check if 'datetime' column exists
+if 'datetime' in data.columns:
+    data['datetime'] = pd.to_datetime(data['datetime'])
+else:
+    st.error("Column 'datetime' not found in the dataset.")
 
 last_date = data['datetime'].max()
 # Calculate the start date of the last month
