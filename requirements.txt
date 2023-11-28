@@ -1,7 +1,8 @@
-streamlit_option_menu
-seaborn
-numpy
-pandas
-streamlit-aggrid
-matplotlib
-streamlit
+pandas>=1.4.2
+numpy>=1.22.3
+scikit-learn>=1.0.2
+matplotlib>=3.5.1
+seaborn>=0.11.2
+streamlit>=1.10.0
+requests>=2.27.1
+flask>=2.1.2
